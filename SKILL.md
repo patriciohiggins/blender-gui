@@ -60,6 +60,7 @@ Verificar siempre con tres señales antes de afirmar que terminó:
 - `HERMES_BRIDGE_REFUSED`: root u otros usuarios logueados; no usar en hosts compartidos (override: `HERMES_BRIDGE_ALLOW_SHARED=1`).
 - `code too large or invalid` / `request too large or incomplete` / `request timeout` / `command queue full` / `too many clients`: límites de v1.1.1/v1.2.0; dividir el código o reducir clientes, no subir los límites sin revisar el riesgo.
 - Límites por defecto: 64 KB por request, 32 KB de código, 5 s para recibir, 16 comandos en cola, 8 clientes, 120 s de ejecución. Configurables con `HERMES_BRIDGE_MAX_REQUEST_BYTES`, `HERMES_BRIDGE_MAX_CODE_BYTES`, `HERMES_BRIDGE_READ_TIMEOUT`, `HERMES_BRIDGE_MAX_QUEUE`, `HERMES_BRIDGE_MAX_CLIENTS` y `HERMES_BRIDGE_PORT`.
+- En CI, `tests/test_bridge_hardening.py` escribe el informe en `$TMPDIR` (o en `HERMES_TEST_REPORT`); nunca hardcodear rutas de scratch: el runner de GitHub no tiene `/home/k2`.
 - `AttributeError: read_factory_settings`: usar `read_homefile()` en 4.4.3.
 - Menú Add / Edit Mode aparece solo: el mouse estaba en el viewport; moverlo a la consola o usar el bridge.
 - La consola recibe solo una letra: el teclado sintético pierde ráfagas largas; dividir comandos o usar el bridge.
