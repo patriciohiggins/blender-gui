@@ -1,0 +1,20 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  hardening:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Sintaxis
+        run: python3 -m py_compile scripts/*.py tests/*.py
+      - name: Tests de hardening (13 defensas)
+        run: python3 tests/test_bridge_hardening.py
+      - name: Integridad de archivos versionados
+        run: sha256sum -c SHA256SUMS
