@@ -8,6 +8,7 @@ import json
 import os
 import socket
 import sys
+import tempfile
 import threading
 import time
 import types
@@ -182,7 +183,9 @@ worker.join(timeout=5)
 check("cancelacion cooperativa", captured.get("r", {}).get("cancelled") is True
       and "start" in captured.get("r", {}).get("progress", []), str(captured.get("r")))
 
-report = "/home/k2/.hermes/cache/scratch/blander_hardening_tests.txt"
+report = os.environ.get("HERMES_TEST_REPORT") or os.path.join(
+    tempfile.gettempdir(), "blander_hardening_tests.txt")
+os.makedirs(os.path.dirname(report), exist_ok=True)
 with open(report, "w") as f:
     f.write(f"failures={len(failures)} list={failures}\n")
 print(f"RESULTADO: {len(failures)} fallos -> {report}")
